@@ -23,21 +23,20 @@ import java.nio.file.Paths;
 public class ImageFolderClassification {
 
     public static void main(String[] args) throws ModelNotFoundException, MalformedModelException, IOException, TranslateException {
-        String folderPath = "/Users/ruitex23/Desktop/Rita/images"; // Update with your image folder
+        String folderPath = "/Users/ruitex23/Desktop/Rita/images";
 
         // Define a translator with preprocessing steps
         ImageClassificationTranslator translator = ImageClassificationTranslator.builder()
-                .addTransform(new Resize(224, 224))  // Resize image
-                .addTransform(new ToTensor())        // Convert to tensor format
+                .addTransform(new Resize(224, 224))  
+                .addTransform(new ToTensor())        
                 .addTransform(new Normalize(new float[]{0.485f, 0.456f, 0.406f},
-                        new float[]{0.229f, 0.224f, 0.225f})) // Normalize
+                        new float[]{0.229f, 0.224f, 0.225f})) 
                 .build();
 
-        // Load model with specified criteria
         Criteria<Image, Classifications> criteria = Criteria.builder()
                 .setTypes(Image.class, Classifications.class)
                 .optApplication(Application.CV.IMAGE_CLASSIFICATION)
-                .optTranslator(translator) // Pass the translator here
+                .optTranslator(translator) 
                 .build();
 
         try (Model model = ModelZoo.loadModel(criteria);
@@ -51,7 +50,7 @@ public class ImageFolderClassification {
 
 
             if (imageFiles == null || imageFiles.length == 0) {
-                System.out.println("No images found in folder.");
+                System.out.println("The folder has no images.");
                 return;
             }
 
